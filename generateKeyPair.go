@@ -6,13 +6,14 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"fmt"
+	"main/myrsa"
 	"os"
 )
 
 //生成密钥对
 func generateKey() {
 	//使用随机数生成指定长度的 RSA 密钥对
-	key, err := rsa.GenerateKey(rand.Reader, 2048)
+	key, err := myrsa.GenerateKey(rand.Reader, 2048)
 	checkError(err)
 	//导出公钥
 	publicKey := key.PublicKey

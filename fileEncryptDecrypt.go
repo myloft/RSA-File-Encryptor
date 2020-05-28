@@ -1,8 +1,8 @@
 package main
 
 import (
-	"crypto/rand"
 	"crypto/rsa"
+	"main/myrsa"
 	"os"
 )
 
@@ -32,13 +32,13 @@ func encryptFile(inputPath string, outputPath string, key *rsa.PublicKey) {
 	//循环加密
 	for i := 0; i < size; i++ {
 		block := b[i*245 : (i+1)*245]
-		res, err := rsa.EncryptPKCS1v15(rand.Reader, key, block)
+		res, err := myrsa.Encrypt(key, block)
 		checkError(err)
 		outfile.Write(res)
 	}
 	//处理剩余部分
 	block := b[size*245:]
-	res, err := rsa.EncryptPKCS1v15(rand.Reader, key, block)
+	res, err := myrsa.Encrypt(key, block)
 	checkError(err)
 	outfile.Write(res)
 }
@@ -68,7 +68,7 @@ func decryptFile(inputPath string, outputPath string, key *rsa.PrivateKey) {
 	//循环解密
 	for i := 0; i < size; i++ {
 		block := b[i*256 : (i+1)*256]
-		res, err := rsa.DecryptPKCS1v15(rand.Reader, key, block)
+		res, err := myrsa.Decrypt(key, block)
 		checkError(err)
 		outfile.Write(res)
 	}

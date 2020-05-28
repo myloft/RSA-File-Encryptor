@@ -1,6 +1,20 @@
 # RSA-File-Encryptor
 基于 RSA 非对称加密算法的文件分组加密工具
 
+## 说明
+### 编译
+```bash
+make
+```
+### 运行单元测试
+```bash
+make unittest
+```
+### 运行性能对比测试
+```bash
+make bench
+```
+
 ## 功能
 - 生成 RSA 密钥
 
