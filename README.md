@@ -58,5 +58,37 @@ rsa.go中主要实现了三个函数，分别是：
 - Decrypt：使用私钥解密一串字节buffer
   - 对应的，解密后返回的明文也会去掉开头的第一个字节
 
+### 主程序
+
+主程序主要包含三大功能模块，分别是：
+
+- RSA 密钥对生成
+
+- 文本密钥文件解码
+
+- 文件加解密
 
 
+RSA 密钥对生成由generateKeyPair.go实现，包含以下三个函数：
+
+- generateKey：调用myrsa中实现的rsa公私秘钥对函数生成密钥。
+
+- savePEMKey：依据PKCS#1标准将生成的原始密钥导出为PEM格式的私钥。
+
+- savePublicPEMKey：依据PKCS#1标准将生成的原始密钥导出为PEM格式的公钥。
+
+
+文本密钥文件解码由decryptKeyPair.go实现，包含以下两个函数：
+
+- decryptPEMKey：依据PKCS#1标准将PEM格式的私钥转换成原始密钥。
+
+- decryptPublicPEMKey：依据PKCS#1标准将PEM格式的公钥转换成原始密钥。
+
+
+文件加解密由fileEncryptDecrypt.go实现，包含以下两个函数：
+
+- encryptFile：使用使用myrsa中实现的Encrypt函数进行加密。
+  - 由于2048bit长的密钥最大加密长度为245byte，因此将需要加密的文件分为长度为245byte的分组后分别加密。
+
+- decryptFile：使用myrsa中实现的Decrypt函数进行解密。
+  - 由于2048bit长的密钥加密后的密文长度为256byte，因此将需要解密的文件分为长度为256byte的分组后分别解密。
